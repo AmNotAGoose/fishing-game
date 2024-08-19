@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;
+    public float speed = 50f;
     public float sensitivity = 2f;
     public float jumpMultiplier = 5f;
-    public float gravity = -10f;
+    public float gravity = -20f;
     public bool isGrounded;
     public GameObject playerObject;
 
@@ -37,12 +37,12 @@ public class PlayerController : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
 
-        Vector3 move = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
+        Vector3 move = transform.right * Input.GetAxisRaw("Horizontal") + transform.forward * Input.GetAxisRaw("Vertical");
         controller.Move(move * speed * Time.deltaTime);
 
 
-        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X"));
-        Camera.main.transform.Rotate(Vector3.left * Input.GetAxis("Mouse Y") * sensitivity);
+        transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X"));
+        Camera.main.transform.Rotate(Vector3.left * Input.GetAxisRaw("Mouse Y") * sensitivity);
         
         controller.Move(velocity * Time.deltaTime);
     }
