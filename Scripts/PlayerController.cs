@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,61 +10,40 @@ public class PlayerController : MonoBehaviour
     public float sensitivity = 2f;
     public float jumpMultiplier = 5f;
     public float gravity = -10f;
+    public bool isGrounded;
+    public GameObject playerObject;
 
-    private Rigidbody rb;
+    private CharacterController controller;
     private Vector3 velocity;
-    private bool isGrounded;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
+        playerObject = this.transform.Find("Capsule").gameObject;
     }
 
     void Update()
     {
+        isGrounded = controller.isGrounded;
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f; // Small value to keep the player grounded
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpMultiplier * -2f * gravity);
+        } 
+
+        velocity.y += gravity * Time.deltaTime;
+
         Vector3 move = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
-        rb.MovePosition(transform.position + move * speed * Time.deltaTime);
+        controller.Move(move * speed * Time.deltaTime);
 
 
         transform.Rotate(Vector3.up * Input.GetAxis("Mouse X"));
         Camera.main.transform.Rotate(Vector3.left * Input.GetAxis("Mouse Y") * sensitivity);
-        if (Camera.main.transform.eulerAngles.x > 180f)
-        {
-            Camera.main.transform.eulerAngles = new Vector2 (180f, Camera.main.transform.eulerAngles.y);
-        }
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            rb.AddForce(Vector3.up * jumpMultiplier, ForceMode.Impulse);
-        }
-
-        velocity.y += gravity * Time.deltaTime;
-
-        rb.AddForce(Vector3.up * velocity.y);
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-            velocity.y = -2f;
-        }
-    }
-
-    void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
+        
+        controller.Move(velocity * Time.deltaTime);
     }
 }
