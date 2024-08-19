@@ -13,19 +13,21 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public GameObject playerObject;
     public GameObject fishingRod;
-
-    private CharacterController controller;
-    private Vector3 velocity;
+    public CharacterController controller;
+    public Vector3 velocity;
+    public Animator rodAnimator;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        fishingRod = this.transform.Find("FishingRod").gameObject;
+        fishingRod = this.transform.Find("Main Camera").Find("FishingRod").gameObject;
         playerObject = this.transform.Find("Capsule").gameObject;
     }
 
     void Update()
     {
+        // movement
+
         isGrounded = controller.isGrounded;
         if (isGrounded && velocity.y < 0)
         {
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpMultiplier * -2f * gravity);
         } 
 
+
         velocity.y += gravity * Time.deltaTime;
 
         Vector3 move = transform.right * Input.GetAxisRaw("Horizontal") + transform.forward * Input.GetAxisRaw("Vertical");
@@ -47,5 +50,21 @@ public class PlayerController : MonoBehaviour
         Camera.main.transform.Rotate(Vector3.left * Input.GetAxisRaw("Mouse Y") * sensitivity);
         
         controller.Move(velocity * Time.deltaTime);
+
+
+        // gameplay
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("notworking");
+            CastRod();
+        }
+    }
+
+    public void CastRod()
+    {
+        Debug.Log("notworking2");
+
+        Debug.Log(rodAnimator);
+        rodAnimator.SetTrigger("Cast");
     }
 }
