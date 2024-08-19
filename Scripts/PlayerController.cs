@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float gravity = -20f;
     public bool isGrounded;
     public GameObject playerObject;
+    public GameObject fishingRod;
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        fishingRod = this.transform.Find("FishingRod").gameObject;
         playerObject = this.transform.Find("Capsule").gameObject;
     }
 
