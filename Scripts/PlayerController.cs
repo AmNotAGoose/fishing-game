@@ -24,8 +24,13 @@ public class PlayerController : MonoBehaviour
         Vector3 move = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
         rb.MovePosition(transform.position + move * speed * Time.deltaTime);
 
+
         transform.Rotate(Vector3.up * Input.GetAxis("Mouse X"));
         Camera.main.transform.Rotate(Vector3.left * Input.GetAxis("Mouse Y") * sensitivity);
+        if (Camera.main.transform.eulerAngles.x > 180f)
+        {
+            Camera.main.transform.eulerAngles = new Vector2 (180f, Camera.main.transform.eulerAngles.y);
+        }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
