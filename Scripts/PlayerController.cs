@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
     public void CastRod()
     {
         rodAnimator.SetTrigger("Cast");
+
         Vector3 randomPoint = fishingCastPoint.transform.position + transform.forward * UnityEngine.Random.Range(10f, 50f);
         fishingPoint.transform.position = new Vector3(randomPoint.x, -1, randomPoint.z);
         lineRenderer.SetPosition(1, fishingPoint.transform.position);
@@ -83,5 +84,13 @@ public class PlayerController : MonoBehaviour
         Debug.Log(new Vector3(randomPoint.x, -1, randomPoint.z));
         Debug.Log(randomPoint);
         Debug.Log(fishingPoint.transform.position);
+    }
+
+    public IEnumerator WaitForFish()
+    {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 5));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 5));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 5));
+        Debug.Log("you caught a fish !");
     }
 }
