@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        fishingCastPoint = this.transform.Find("Main Camera").Find("FishingRod").Find("CastPoint").gameObject;
-        fishingPoint = this.transform.Find("Main Camera").Find("FishingRod").Find("Point").gameObject;
         playerObject = this.transform.Find("Capsule").gameObject;
 
 
@@ -73,11 +71,17 @@ public class PlayerController : MonoBehaviour
             CastRod();
         }
         lineRenderer.SetPosition(0, fishingCastPoint.transform.position);
-        lineRenderer.SetPosition(1, fishingPoint.transform.position);
     }
 
     public void CastRod()
     {
         rodAnimator.SetTrigger("Cast");
+        Vector3 randomPoint = fishingCastPoint.transform.position + transform.forward * UnityEngine.Random.Range(10f, 50f);
+        fishingPoint.transform.position = new Vector3(randomPoint.x, -1, randomPoint.z);
+        lineRenderer.SetPosition(1, fishingPoint.transform.position);
+
+        Debug.Log(new Vector3(randomPoint.x, -1, randomPoint.z));
+        Debug.Log(randomPoint);
+        Debug.Log(fishingPoint.transform.position);
     }
 }
