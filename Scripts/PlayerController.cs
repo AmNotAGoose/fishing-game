@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,15 +14,29 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public GameObject playerObject;
     public GameObject fishingRod;
+    public GameObject fishingCastPoint;
+    public GameObject fishingPoint;
     public CharacterController controller;
     public Vector3 velocity;
     public Animator rodAnimator;
+    public LineRenderer lineRenderer;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        fishingRod = this.transform.Find("Main Camera").Find("FishingRod").gameObject;
+        fishingCastPoint = this.transform.Find("Main Camera").Find("FishingRod").Find("CastPoint").gameObject;
+        fishingPoint = this.transform.Find("Main Camera").Find("FishingRod").Find("Point").gameObject;
         playerObject = this.transform.Find("Capsule").gameObject;
+
+
+        //chatgpt help with this part
+        lineRenderer = fishingRod.AddComponent<LineRenderer>();
+        lineRenderer.startWidth = 0.05f;
+        lineRenderer.endWidth = 0.05f;
+        lineRenderer.positionCount = 2;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.black;
+        lineRenderer.endColor = Color.black;
     }
 
     void Update()
@@ -55,16 +70,14 @@ public class PlayerController : MonoBehaviour
         // gameplay
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("notworking");
             CastRod();
         }
+        lineRenderer.SetPosition(0, fishingCastPoint.transform.position);
+        lineRenderer.SetPosition(1, fishingPoint.transform.position);
     }
 
     public void CastRod()
     {
-        Debug.Log("notworking2");
-
-        Debug.Log(rodAnimator);
         rodAnimator.SetTrigger("Cast");
     }
 }

@@ -203,9 +203,12 @@ MonoBehaviour:
   isGrounded: 0
   playerObject: {fileID: 220699524}
   fishingRod: {fileID: 3347047933294256203}
+  fishingCastPoint: {fileID: 0}
+  fishingPoint: {fileID: 0}
   controller: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   rodAnimator: {fileID: 6955969830708395069}
+  lineRenderer: {fileID: 0}
 --- !u!136 &111454540
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -645,6 +648,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1023299734}
+  - component: {fileID: 1023299735}
   m_Layer: 0
   m_Name: Point
   m_TagString: Untagged
@@ -667,6 +671,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2682116711255505649}
   m_LocalEulerAnglesHint: {x: 2.488, y: -18.521, z: -0.543}
+--- !u!54 &1023299735
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023299733}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1570185926
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,6 +846,37 @@ LightingSettings:
   m_PVRTiledBaking: 0
   m_NumRaysToShootPerTexel: -1
   m_RespectSceneVisibilityWhenBakingGI: 0
+--- !u!1 &2138711831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2138711832}
+  m_Layer: 0
+  m_Name: CastPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2138711832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138711831}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.022185756, y: -0.16078523, z: -0.0011826287, w: 0.9867394}
+  m_LocalPosition: {x: 0.205, y: -0.014, z: 1.48}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2682116711255505649}
+  m_LocalEulerAnglesHint: {x: 2.488, y: -18.521, z: -0.543}
 --- !u!33 &1339558541711308116
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -837,6 +899,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1023299734}
+  - {fileID: 2138711832}
   m_Father: {fileID: 1570185931}
   m_LocalEulerAnglesHint: {x: -18.488, y: 4.317, z: -86.528}
 --- !u!1 &3347047933294256203
