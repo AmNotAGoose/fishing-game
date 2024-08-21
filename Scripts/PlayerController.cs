@@ -124,22 +124,7 @@ public class PlayerController : MonoBehaviour
 
         if (caughtFish)
         {
-            Fish randomFish = fishingManager.GetRandomFish();
-            curFish = Instantiate(randomFish.obj, transform.position + transform.forward * 2f, Quaternion.identity);
-            totalCaughtFish.SetText("Total Caught Fish: " + (Int32.Parse(totalCaughtFish.text.Split(" ")[3]) + 1).ToString());
-            score.SetText("Total $$$: " + (Int32.Parse(score.text.Split(" ")[2]) + randomFish.value).ToString());
-            curCaughtFish.SetText(randomFish.name);
-            curScore.SetText("$" + randomFish.value.ToString());
-            curDescription.SetText(randomFish.description);
-            curFishPanel.SetActive(true);
-            /*    public TextMeshProUGUI totalCaughtFish;
-    public TextMeshProUGUI score;
-    public TextMeshProUGUI curCaughtFish;
-    public TextMeshProUGUI curScore;
-    public GameObject curFishPanel;*/
-        } else
-        {
-            Debug.Log("fish canceled");
+            StartCoroutine(ShowEndScreen());
         }
 
         fishing = false;
@@ -149,7 +134,20 @@ public class PlayerController : MonoBehaviour
     {
         fishing = false;
         caughtFish = false;
-        Debug.Log("canceled");
         StopCoroutine(WaitForFish());
+    }
+
+    public IEnumerator ShowEndScreen()
+    {
+        Fish randomFish = fishingManager.GetRandomFish();
+        curFish = Instantiate(randomFish.obj, transform.position + transform.forward * 2f, Quaternion.identity);
+        totalCaughtFish.SetText("Total Caught Fish: " + (Int32.Parse(totalCaughtFish.text.Split(" ")[3]) + 1).ToString());
+        score.SetText("Total $$$: " + (Int32.Parse(score.text.Split(" ")[2]) + randomFish.value).ToString());
+        curCaughtFish.SetText(randomFish.name);
+        curScore.SetText("$" + randomFish.value.ToString());
+        curDescription.SetText(randomFish.description);
+        curFishPanel.SetActive(true);
+        yield return new WaitForSeconds(2);
+        curFishPanel.SetActive(false);
     }
 }
