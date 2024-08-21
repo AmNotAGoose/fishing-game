@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 velocity;
     public Animator rodAnimator;
     public LineRenderer lineRenderer;
+    public bool fishing = false;
 
     void Start()
     {
@@ -66,11 +67,18 @@ public class PlayerController : MonoBehaviour
 
 
         // gameplay
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !fishing)
         {
             CastRod();
         }
-        lineRenderer.SetPosition(0, fishingCastPoint.transform.position);
+        if (fishing)
+        {
+            lineRenderer.SetPosition(0, fishingCastPoint.transform.position);
+        } else
+        {
+            lineRenderer.SetPosition(0, fishingCastPoint.transform.position);
+            lineRenderer.SetPosition(1, fishingCastPoint.transform.position);
+        }
     }
 
     public void CastRod()
@@ -81,16 +89,14 @@ public class PlayerController : MonoBehaviour
         fishingPoint.transform.position = new Vector3(randomPoint.x, -1, randomPoint.z);
         lineRenderer.SetPosition(1, fishingPoint.transform.position);
 
-        Debug.Log(new Vector3(randomPoint.x, -1, randomPoint.z));
-        Debug.Log(randomPoint);
-        Debug.Log(fishingPoint.transform.position);
+        StartCoroutine(WaitForFish());
     }
 
     public IEnumerator WaitForFish()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 5));
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 5));
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 5));
+        fishing = true;
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 30));
         Debug.Log("you caught a fish !");
+        fishing = false;
     }
 }
