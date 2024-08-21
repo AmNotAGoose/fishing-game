@@ -18,10 +18,13 @@ public class FishingManager : MonoBehaviour
 
         float randomValue = Random.Range(0f, totalWeight);
 
+
         float cumulativeWeight = 0f;
         foreach (Fish fish in fishes)
         {
-            cumulativeWeight += fish.rarity;
+
+            cumulativeWeight += 1f / fish.rarity;
+
             if (randomValue <= cumulativeWeight)
             {
                 return fish;

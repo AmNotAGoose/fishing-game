@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
         fishing = true;
         caughtFish = true;
         
-        float waitTime = UnityEngine.Random.Range(1, 30);
+        float waitTime = UnityEngine.Random.Range(0, 0);
         float passedTime = 0f;
 
         while (passedTime < waitTime && fishing)

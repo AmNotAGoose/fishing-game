@@ -211,7 +211,7 @@ MonoBehaviour:
   lineRenderer: {fileID: 0}
   fishing: 0
   caughtFish: 1
-  fishingManager: {fileID: 0}
+  fishingManager: {fileID: 453628709}
 --- !u!136 &111454540
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -440,7 +440,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7064511626a12a54a9995e599440026e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishes: []
+  fishes:
+  - {fileID: 2912989852942098433, guid: 158addaba9b4ff24bba86bbbfb299a6d, type: 3}
+  - {fileID: 241712606134107154, guid: f2c62a92a7cc6354b8c313d3a8a4101a, type: 3}
+  - {fileID: 2872552396903349829, guid: a035e5a72023f4a43b4ed5fd12fd2cae, type: 3}
+  - {fileID: 297696108352767266, guid: 8767aed0c08b850498c4a5ae7a61c424, type: 3}
+  - {fileID: 3007553573927486288, guid: 0b746e3247176ab48b3031e22512538d, type: 3}
 --- !u!4 &453628710
 Transform:
   m_ObjectHideFlags: 0
