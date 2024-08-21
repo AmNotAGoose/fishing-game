@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     public Animator rodAnimator;
     public LineRenderer lineRenderer;
     public bool fishing = false;
+    public bool caughtFish = true;
+    public FishingManager fishingManager;
 
     void Start()
     {
@@ -71,6 +73,11 @@ public class PlayerController : MonoBehaviour
         {
             CastRod();
         }
+
+        if (Input.GetMouseButtonDown(1) && fishing)
+        {
+            CancelFishing();
+        }
         if (fishing)
         {
             lineRenderer.SetPosition(0, fishingCastPoint.transform.position);
@@ -95,8 +102,33 @@ public class PlayerController : MonoBehaviour
     public IEnumerator WaitForFish()
     {
         fishing = true;
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1, 30));
-        Debug.Log("you caught a fish !");
+        caughtFish = true;
+        
+        float waitTime = UnityEngine.Random.Range(1, 30);
+        float passedTime = 0f;
+
+        while (passedTime < waitTime && fishing)
+        {
+            passedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        if (caughtFish)
+        {
+            Debug.Log(fishingManager.GetRandomFish());
+        } else
+        {
+            Debug.Log("fish canceled");
+        }
+
         fishing = false;
+    }
+
+    public void CancelFishing()
+    {
+        fishing = false;
+        caughtFish = false;
+        Debug.Log("canceled");
+        StopCoroutine(WaitForFish());
     }
 }
