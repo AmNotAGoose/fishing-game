@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         playerObject = this.transform.Find("Capsule").gameObject;
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         //chatgpt help with this part
         lineRenderer = fishingRod.AddComponent<LineRenderer>();
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.startColor = Color.black;
         lineRenderer.endColor = Color.black;
+
     }
 
     void Update()
