@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,6 +24,14 @@ public class PlayerController : MonoBehaviour
     public bool fishing = false;
     public bool caughtFish = true;
     public FishingManager fishingManager;
+    public GameObject curFish;
+
+    public TextMeshProUGUI totalCaughtFish;
+    public TextMeshProUGUI score;
+    public TextMeshProUGUI curCaughtFish;
+    public TextMeshProUGUI curScore;
+    public TextMeshProUGUI curDescription;
+    public GameObject curFishPanel;
 
     void Start()
     {
@@ -104,7 +113,7 @@ public class PlayerController : MonoBehaviour
         fishing = true;
         caughtFish = true;
         
-        float waitTime = UnityEngine.Random.Range(0, 0);
+        float waitTime = UnityEngine.Random.Range(0, 30);
         float passedTime = 0f;
 
         while (passedTime < waitTime && fishing)
@@ -115,7 +124,19 @@ public class PlayerController : MonoBehaviour
 
         if (caughtFish)
         {
-            Debug.Log(fishingManager.GetRandomFish());
+            Fish randomFish = fishingManager.GetRandomFish();
+            curFish = Instantiate(randomFish.obj, transform.position + transform.forward * 2f, Quaternion.identity);
+            totalCaughtFish.SetText("Total Caught Fish: " + (Int32.Parse(totalCaughtFish.text.Split(" ")[3]) + 1).ToString());
+            score.SetText("Total $$$: " + (Int32.Parse(score.text.Split(" ")[2]) + randomFish.value).ToString());
+            curCaughtFish.SetText(randomFish.name);
+            curScore.SetText("$" + randomFish.value.ToString());
+            curDescription.SetText(randomFish.description);
+            curFishPanel.SetActive(true);
+            /*    public TextMeshProUGUI totalCaughtFish;
+    public TextMeshProUGUI score;
+    public TextMeshProUGUI curCaughtFish;
+    public TextMeshProUGUI curScore;
+    public GameObject curFishPanel;*/
         } else
         {
             Debug.Log("fish canceled");
